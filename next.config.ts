@@ -5,3 +5,9 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
+
+export const metadata = {
+  title: 'Flight Search App',
+  description: 'Search and book your best escape with ease!',
+};
+

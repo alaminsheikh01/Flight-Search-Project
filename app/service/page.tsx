@@ -11,12 +11,7 @@ const Services = () => {
         <p className="text-lg text-gray-700 mb-6">
           At Flight Search, we provide a range of services to make your travel planning effortless:
         </p>
-        <ul className="text-lg text-gray-700 list-disc list-inside space-y-3">
-          <li>Search and book flights at the best rates.</li>
-          <li>Find and reserve hotels that fit your needs.</li>
-          <li>Explore exclusive travel packages for vacations and business trips.</li>
-          <li>Compare prices and options to get the best deals.</li>
-        </ul>
+
       </div>
     </div>
   );

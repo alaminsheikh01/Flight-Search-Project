@@ -1,11 +1,34 @@
 // components/FlightSearchForm.tsx
-import React from "react";
-import { Input, Select, DatePicker, Button } from "antd";
+import React, { useState } from "react";
+import { Select, DatePicker, Button, AutoComplete } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
+const { RangePicker } = DatePicker;
 
 const FlightSearchForm = () => {
+  const [options, setOptions] = useState<{ value: string }[]>([]);
+
+  const handleSearch = (value: string) => {
+    // Simulated location search, replace with API logic
+    const locations = [
+      "New York, USA",
+      "Los Angeles, USA",
+      "London, UK",
+      "Paris, France",
+      "Tokyo, Japan",
+      "Sydney, Australia",
+    ];
+
+    const filteredOptions = locations
+      .filter((location) =>
+        location.toLowerCase().includes(value.toLowerCase())
+      )
+      .map((location) => ({ value: location }));
+
+    setOptions(filteredOptions);
+  };
+
   return (
     <>
       {/* Search Form */}
@@ -30,13 +53,23 @@ const FlightSearchForm = () => {
             </Select>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-            <Input placeholder="From" className="w-full" />
-            <Input placeholder="To" className="w-full" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+            <AutoComplete
+              options={options}
+              onSearch={handleSearch}
+              placeholder="Flying From"
+              className="w-full"
+            />
+            <AutoComplete
+              options={options}
+              onSearch={handleSearch}
+              placeholder="Flying To"
+              className="w-full"
+            />
+            <RangePicker placeholder={["Start Date", "End Date"]} className="w-full" />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-            <DatePicker placeholder="Flight Date" className="w-full" />
             <Select placeholder="1 Passenger" className="w-full">
               <Option value="1">1 Passenger</Option>
               <Option value="2">2 Passengers</Option>

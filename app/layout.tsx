@@ -4,8 +4,9 @@ import "./globals.css";
 import "antd/dist/reset.css";
 import { Layout } from "antd";
 import Navbar from "@/src/components/Navbar";
+import Footer from "@/src/components/Footer";
 
-const { Content, Footer } = Layout;
+const { Content } = Layout;
 
 export default function RootLayout({
   children,
@@ -18,9 +19,7 @@ export default function RootLayout({
         <Layout>
           <Navbar />
           <Content>{children}</Content>
-          <Footer className="text-center text-gray-500 py-4">
-            © 2025 Flight Search. All rights reserved.
-          </Footer>
+          <Footer/>
         </Layout>
       </body>
     </html>

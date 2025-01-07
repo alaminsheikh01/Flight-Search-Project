@@ -1,16 +1,16 @@
-// components/FlightSearchForm.tsx
+"use client";
 import React, { useState } from "react";
 import { Select, DatePicker, Button, AutoComplete } from "antd";
-import { SearchOutlined } from "@ant-design/icons";
-import Results from "@/app/result/page";
+import { SearchOutlined, SwapOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import useFetchFlights from "../hooks/useFetch";
+import { useFlightContext } from "../context/FlightContext";
 
 const { Option } = Select;
-const { RangePicker } = DatePicker;
 
 const FlightSearchForm = () => {
-  const route = useRouter(); // Get the route object
+  const router = useRouter();
+  const { setFlights } = useFlightContext();
   const [options, setOptions] = useState<{ label: string; value: string }[]>(
     []
   );
@@ -19,11 +19,9 @@ const FlightSearchForm = () => {
     from: "",
     to: "",
     startDate: "",
-    endDate: "",
     passengers: "1",
     travelClass: "economy",
     tripType: "one-way",
-    airline: "",
   });
 
   const handleSearch = (value: string) => {
@@ -45,33 +43,62 @@ const FlightSearchForm = () => {
 
   const handleFormSubmit = async () => {
     const { from, to, startDate } = formData;
-
-    // Use the custom hook to fetch flights
-    await fetchFlights(from, to, startDate);
-
-    // Navigate to the results page after fetching
-    if (flights.length > 0) {
-      route.push("/result");
+  
+    if (!from || !to || !startDate) {
+      alert("Please fill in all required fields");
+      return;
+    }
+  
+    const fetchedFlights = await fetchFlights(from, to, startDate);
+    if (fetchedFlights) {
+      setFlights(fetchedFlights);
+      router.push("/result");
     }
   };
+  
 
   return (
-    <div className="relative z-20 w-full max-w-5xl -mt-20 px-4">
-      <div className="bg-white rounded-lg shadow-lg p-6 md:p-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <Select
-            placeholder="All Airlines"
-            className="w-full"
-            onChange={(value) => setFormData({ ...formData, airline: value })}
-          >
-            <Option value="airline1">Airline 1</Option>
-            <Option value="airline2">Airline 2</Option>
-            <Option value="airline3">Airline 3</Option>
-          </Select>
+    <div className="bg-white shadow-md rounded-lg p-10 max-w-6xl mx-auto">
+      {/* Top Navigation */}
+      <div className="flex justify-between items-center border-b pb-3">
+        <div className="flex space-x-6">
+          <Button className="flex items-center text-red-500 font-medium">
+            <span className="mr-2">✈️</span> Flight
+          </Button>
+          <Button className="flex items-center text-gray-500 hover:text-red-500">
+            <span className="mr-2">📋</span> Hotel
+          </Button>
+          <Button className="flex items-center text-gray-500 hover:text-red-500">
+            <span className="mr-2">🕋</span> Umrah
+          </Button>
+        </div>
+      </div>
 
+      {/* Flight Options */}
+      <div className="flex justify-between mt-4">
+        <div className="flex space-x-4">
           <Select
-            placeholder="Business Class"
-            className="w-full"
+            className="w-80"
+            defaultValue="One Way"
+            onChange={(value) => setFormData({ ...formData, tripType: value })}
+          >
+            <Option value="one-way">One Way</Option>
+            <Option value="round-trip">Round Trip</Option>
+          </Select>
+          <Select
+            className="w-80"
+            defaultValue="1 Passenger"
+            onChange={(value) =>
+              setFormData({ ...formData, passengers: value })
+            }
+          >
+            <Option value="1">1 Passenger</Option>
+            <Option value="2">2 Passengers</Option>
+            <Option value="3">3 Passengers</Option>
+          </Select>
+          <Select
+            className="w-80"
+            defaultValue="Economy"
             onChange={(value) =>
               setFormData({ ...formData, travelClass: value })
             }
@@ -80,76 +107,48 @@ const FlightSearchForm = () => {
             <Option value="business">Business</Option>
             <Option value="first">First Class</Option>
           </Select>
-
-          <Select
-            placeholder="One-Way"
-            className="w-full"
-            defaultValue="one-way"
-            onChange={(value) => setFormData({ ...formData, tripType: value })}
-          >
-            <Option value="one-way">One-Way</Option>
-            <Option value="round-trip">Round-Trip</Option>
-          </Select>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <AutoComplete
-            options={options}
-            onSearch={handleSearch}
-            placeholder="Flying From"
-            className="w-full"
-            onSelect={(value) => setFormData({ ...formData, from: value })}
-          />
-          <AutoComplete
-            options={options}
-            onSearch={handleSearch}
-            placeholder="Flying To"
-            className="w-full"
-            onSelect={(value) => setFormData({ ...formData, to: value })}
-          />
-          <RangePicker
-            className="w-full"
-            onChange={(dates, dateStrings) =>
-              setFormData({
-                ...formData,
-                startDate: dateStrings[0],
-                endDate: dateStrings[1],
-              })
-            }
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-          <Select
-            placeholder="1 Passenger"
-            className="w-full"
-            defaultValue="1"
-            onChange={(value) =>
-              setFormData({ ...formData, passengers: value })
-            }
-          >
-            <Option value="1">1 Passenger</Option>
-            <Option value="2">2 Passengers</Option>
-            <Option value="3">3 Passengers</Option>
-            <Option value="4">4 Passengers</Option>
-          </Select>
-        </div>
-
-        <div className="flex justify-center mt-6">
-          <Button
-            type="primary"
-            icon={<SearchOutlined />}
-            className="bg-orange-500 hover:bg-orange-600 px-10 py-3 text-white rounded-md text-lg font-medium"
-            onClick={handleFormSubmit}
-            loading={loading}
-          >
-            Search Flight
-          </Button>
         </div>
       </div>
 
-      {/* Render Results Component */}
-      {flights.length > 0 && <Results flights={flights} />}
+      {/* Flight Inputs */}
+      <div className="grid grid-cols-4 gap-4 mt-4 items-center">
+        <AutoComplete
+          options={options}
+          onSearch={handleSearch}
+          placeholder="Leaving From"
+          className="w-full"
+          onSelect={(value) => setFormData({ ...formData, from: value })}
+        />
+        <div className="flex items-center space-x-2">
+          <SwapOutlined className="text-gray-500" />
+          <AutoComplete
+            options={options}
+            onSearch={handleSearch}
+            placeholder="Going To"
+            className="w-full"
+            onSelect={(value) => setFormData({ ...formData, to: value })}
+          />
+        </div>
+        <DatePicker
+          className="w-full"
+          placeholder="Departure Date"
+          onChange={(date, dateString) =>
+            setFormData({
+              ...formData,
+              startDate: Array.isArray(dateString) ? dateString[0] : dateString,
+            })
+          }
+        />
+        <Button
+          type="primary"
+          icon={<SearchOutlined />}
+          className="bg-red-500 hover:bg-red-600 text-white px-8 py-2"
+          onClick={handleFormSubmit}
+          loading={loading}
+        >
+          Search
+        </Button>
+      </div>
     </div>
   );
 };

@@ -1,32 +1,14 @@
 import { useState } from "react";
-import { message } from "antd";
-
-interface Flight {
-  airline: {
-    name: string;
-  };
-  departure: {
-    iata: string;
-    airport: string;
-    scheduled: string;
-  };
-  arrival: {
-    iata: string;
-    airport: string;
-    scheduled: string;
-  };
-  price?: number;
-  duration?: string;
-}
+import { toast } from "react-toastify";
 
 const useFetchFlights = () => {
-  const [flights, setFlights] = useState<Flight[]>([]);
+  const [flights, setFlights] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const fetchFlights = async (from: string, to: string, startDate: string) => {
     if (!from || !to || !startDate) {
-      message.error("Please fill in all required fields");
-      return;
+      toast.warn("Please fill in all required fields");
+      return null;
     }
 
     setLoading(true);
@@ -37,15 +19,17 @@ const useFetchFlights = () => {
       );
       const data = await response.json();
 
-      if (data.data) {
-        setFlights(data.data);
-        message.success("Flights loaded successfully");
+      if (data?.data) {
+        setFlights(data?.data);
+        toast.success("Flights loaded successfully");
+        return data?.data;
       } else {
-        message.error("No flights found");
+        toast.warn("No flights found");
+        return null; 
       }
     } catch (error) {
       console.error("Error fetching flights:", error);
-      message.error("Error fetching flight data");
+      return null;
     } finally {
       setLoading(false);
     }

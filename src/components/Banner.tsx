@@ -1,4 +1,4 @@
-// components/Banner.tsx
+"use client";
 import React from "react";
 import Navbar from "./Navbar";
 import FlightSearchForm from "./FlightSearchForm";

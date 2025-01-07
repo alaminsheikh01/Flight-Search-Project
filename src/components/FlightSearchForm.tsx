@@ -5,6 +5,7 @@ import { SearchOutlined, SwapOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import useFetchFlights from "../hooks/useFetch";
 import { useFlightContext } from "../context/FlightContext";
+import { locations } from "./helper";
 
 const { Option } = Select;
 
@@ -25,14 +26,6 @@ const FlightSearchForm = () => {
   });
 
   const handleSearch = (value: string) => {
-    const locations = [
-      { label: "New York, USA (JFK)", value: "JFK" },
-      { label: "Los Angeles, USA (LAX)", value: "LAX" },
-      { label: "London, UK (LHR)", value: "LHR" },
-      { label: "Paris, France (CDG)", value: "CDG" },
-      { label: "Tokyo, Japan (HND)", value: "HND" },
-      { label: "Sydney, Australia (SYD)", value: "SYD" },
-    ];
 
     const filteredOptions = locations.filter((location) =>
       location.label.toLowerCase().includes(value.toLowerCase())

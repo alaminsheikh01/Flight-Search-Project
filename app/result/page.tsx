@@ -6,9 +6,19 @@ import {
   SearchOutlined,
   CaretRightOutlined,
 } from "@ant-design/icons";
-import { Collapse, Radio, Slider, Button, Select, Card } from "antd";
+import {
+  Collapse,
+  Radio,
+  Slider,
+  Button,
+  Select,
+  Card,
+  DatePicker,
+  AutoComplete,
+} from "antd";
 import { toast } from "react-toastify";
 import { useFlightContext } from "@/src/context/FlightContext";
+import { locations } from "@/src/components/helper";
 
 const { Panel } = Collapse;
 const { Option } = Select;
@@ -22,6 +32,26 @@ const ResultPage = () => {
     flightClass: "all",
     airlines: [],
   });
+  const [formData, setFormData] = useState({
+    from: "",
+    to: "",
+    startDate: "",
+    passengers: "1",
+    travelClass: "economy",
+    tripType: "one-way",
+  });
+
+  const [options, setOptions] = useState<{ label: string; value: string }[]>(
+    []
+  );
+
+  const handleSearch = (value: string) => {
+    const filteredOptions = locations.filter((location) =>
+      location.label.toLowerCase().includes(value.toLowerCase())
+    );
+
+    setOptions(filteredOptions);
+  };
 
   const handleFilterChange = (
     key: string,
@@ -84,18 +114,16 @@ const ResultPage = () => {
         </div>
 
         {/* Search Inputs */}
-        <div className="flex items-center justify-between space-x-4 mt-4">
-          <div className="flex-1">
-            <label className="block text-sm text-gray-600">From</label>
-            <div className="bg-gray-50 p-3 rounded-lg shadow-inner">
-              <input
-                type="text"
-                defaultValue="Jakarta, CGK"
-                className="border-none bg-transparent w-full focus:outline-none"
-              />
-            </div>
-          </div>
+        <div className="flex items-center space-x-4 mt-4">
+          <AutoComplete
+            options={options}
+            onSearch={handleSearch}
+            placeholder="Leaving From"
+            className="w-full"
+            onSelect={(value) => setFormData({ ...formData, from: value })}
+          />
 
+          {/* Swap Button */}
           <div className="flex items-center justify-center">
             <Button
               type="primary"
@@ -105,30 +133,29 @@ const ResultPage = () => {
             />
           </div>
 
-          <div className="flex-1">
-            <label className="block text-sm text-gray-600">To</label>
-            <div className="bg-gray-50 p-3 rounded-lg shadow-inner">
-              <input
-                type="text"
-                defaultValue="Switzerland, ZRH"
-                className="border-none bg-transparent w-full focus:outline-none"
-              />
-            </div>
-          </div>
+          {/* Going To */}
+          <AutoComplete
+            options={options}
+            onSearch={handleSearch}
+            placeholder="Going To"
+            className="w-full"
+            onSelect={(value) => setFormData({ ...formData, to: value })}
+          />
 
-          <div className="flex-1">
-            <label className="block text-sm text-gray-600">
-              Departure Date
-            </label>
-            <div className="bg-gray-50 p-3 rounded-lg shadow-inner">
-              <input
-                type="text"
-                defaultValue="Wed, 21 Jun"
-                className="border-none bg-transparent w-full focus:outline-none"
-              />
-            </div>
-          </div>
+            <DatePicker
+              className="w-full"
+              placeholder="Departure Date"
+              onChange={(date, dateString) =>
+                setFormData({
+                  ...formData,
+                  startDate: Array.isArray(dateString)
+                    ? dateString[0]
+                    : dateString,
+                })
+              }
+            />
 
+          {/* Search Button */}
           <Button
             type="primary"
             shape="circle"

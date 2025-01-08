@@ -13,6 +13,6 @@
   }
   
   .bounce-animation {
-    animation: bounce 1s infinite; /* 1s duration and infinite iterations */
+    animation: bounce 1s infinite;
   }
   

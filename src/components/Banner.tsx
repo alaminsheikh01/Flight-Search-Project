@@ -5,7 +5,6 @@ import FlightSearchForm from "./FlightSearchForm";
 const Banner = () => {
   return (
     <section className="relative w-full h-screen flex flex-col justify-center items-center">
-      {/* Video Background */}
       <video
         className="absolute inset-0 w-full h-full object-cover"
         src="/video/video.mp4"
@@ -15,10 +14,8 @@ const Banner = () => {
         playsInline
       ></video>
 
-      {/* Persistent Dark Overlay */}
       <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
-      {/* Text Content */}
       <div className="relative z-10 text-center px-4 text-white">
         <h1 className="text-5xl md:text-6xl font-bold mb-4">
           Best Escape Choice

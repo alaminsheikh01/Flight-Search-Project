@@ -1,4 +1,5 @@
 "use client";
+
 import "./globals.css";
 import "antd/dist/reset.css";
 import { Layout } from "antd";

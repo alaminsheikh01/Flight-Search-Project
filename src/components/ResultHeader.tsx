@@ -11,8 +11,11 @@ const { Option } = Select;
 
 const ResultHeader = () => {
   const router = useRouter();
+
+  // state
   const { setFlights } = useFlightContext();
   const { fetchFlights, loading } = useFetchFlights();
+  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
 
   const [formData, setFormData] = useState({
     from: "",
@@ -23,8 +26,8 @@ const ResultHeader = () => {
     tripType: "one-way",
   });
 
-  const [options, setOptions] = useState<{ label: string; value: string }[]>([]);
 
+// handle search
   const handleSearch = (value: string) => {
     const filteredOptions = locations.filter((location) =>
       location.label.toLowerCase().includes(value.toLowerCase())
@@ -32,6 +35,7 @@ const ResultHeader = () => {
     setOptions(filteredOptions);
   };
 
+  // handle form submit
   const handleFormSubmit = async () => {
     const { from, to, startDate } = formData;
 

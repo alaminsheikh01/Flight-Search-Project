@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Select, DatePicker, Button, AutoComplete } from "antd";
 import { SearchOutlined, SwapOutlined } from "@ant-design/icons";
@@ -23,6 +24,8 @@ const { Option } = Select;
 
 const FlightSearchForm: React.FC = () => {
   const router = useRouter();
+
+  // state
   const { setFlights } = useFlightContext();
   const [options, setOptions] = useState<AutoCompleteOption[]>([]);
   const { fetchFlights, loading } = useFetchFlights();
@@ -36,6 +39,8 @@ const FlightSearchForm: React.FC = () => {
     tripType: "one-way",
   });
 
+
+  // handle search
   const handleSearch = (value: string) => {
     const filteredOptions = locations
       .filter((location) =>
@@ -48,6 +53,7 @@ const FlightSearchForm: React.FC = () => {
     setOptions(filteredOptions);
   };
 
+  // handle form submit
   const handleFormSubmit = async () => {
     const { from, to, startDate } = formData;
 

@@ -10,6 +10,7 @@ const { Panel } = Collapse;
 
 
 const FlightCard: React.FC = () => {
+  
   const { flights }: { flights: Flight[] } = useFlightContext();
 
   return (

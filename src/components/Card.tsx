@@ -55,7 +55,6 @@ const TrendingDestinations: React.FC = () => {
             }}
             transition={{ duration: 0.6 }}
           >
-            {/* Next.js Image Component */}
             <Image
               src={destination?.image}
               alt={destination.name}

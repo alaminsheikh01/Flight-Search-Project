@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 const { Option } = Select;
 
 const Filter = () => {
+
+  // state
   const [filters, setFilters] = useState({
     transit: "all",
     priceRange: [0, 1000],
@@ -91,6 +93,7 @@ const Filter = () => {
         >
           <Option value="garuda">Garuda Indonesia</Option>
           <Option value="qatar">Qatar Airways</Option>
+          <Option value="qatar">Biman Bangladesh</Option>
         </Select>
       </motion.div>
 

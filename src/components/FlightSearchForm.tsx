@@ -25,7 +25,7 @@ const FlightSearchForm: React.FC = () => {
   const router = useRouter();
   const { setFlights } = useFlightContext();
   const [options, setOptions] = useState<AutoCompleteOption[]>([]);
-  const { flights, fetchFlights, loading } = useFetchFlights();
+  const { fetchFlights, loading } = useFetchFlights();
 
   const [formData, setFormData] = useState<FormData>({
     from: "",

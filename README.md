@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## How to setup
 
-## Getting Started
-
-First, run the development server:
+First, clone this project: `git clone https://github.com/alaminsheikh01/Flight-Search-Project.git`
 
 ```bash
+cd <project-name>
+
+npm install
+
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Make .env.local in the root directory 
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+need to add api key:
+NEXT_PUBLIC_API_KEY=<Sent in the email>
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+![image](https://github.com/user-attachments/assets/3f25f479-1153-453d-aa48-e64fad2d3fc8)
 
-## Learn More
+![image](https://github.com/user-attachments/assets/7be205b1-441b-46cb-a07b-b6614e42b025)
 
-To learn more about Next.js, take a look at the following resources:
+### Once click on the search flight:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+![image](https://github.com/user-attachments/assets/b3a49abf-a779-47a3-ac32-e4455c70c96e)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Details View:
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+![image](https://github.com/user-attachments/assets/2a355498-5045-4129-82ee-3b2348b8cc72)

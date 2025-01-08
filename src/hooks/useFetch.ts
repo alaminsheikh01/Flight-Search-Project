@@ -13,7 +13,7 @@ const useFetchFlights = () => {
 
     setLoading(true);
     try {
-      const apiKey = "7b739d8c54084d0ade3251e0daf5f4c0"; // For uploading to GitHub for your review, I did not add this into the .env file
+      const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       const response = await fetch(
         `http://api.aviationstack.com/v1/flights?access_key=${apiKey}&dep_iata=${from}&arr_iata=${to}`
       );

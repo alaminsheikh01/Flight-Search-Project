@@ -43,7 +43,7 @@ const FlightCard: React.FC = () => {
           <div className="flex">
             <div className="relative w-1/4 mb-2">
               <Image
-                src="/banner.jpg"
+                src="/images/banner.jpg"
                 alt="Flight"
                 width={120}
                 height={120}

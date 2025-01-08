@@ -8,17 +8,26 @@ import useFetchFlights from "../hooks/useFetch";
 import { useFlightContext } from "../context/FlightContext";
 import { locations } from "../utils/helpers";
 import { toast } from "react-toastify";
+import { AutoCompleteOption } from "../types/flight";
+
+type FormData = {
+  from: string;
+  to: string;
+  startDate: string;
+  passengers: string;
+  travelClass: string;
+  tripType: string;
+};
 
 const { Option } = Select;
 
-const FlightSearchForm = () => {
+const FlightSearchForm: React.FC = () => {
   const router = useRouter();
   const { setFlights } = useFlightContext();
-  const [options, setOptions] = useState<{ label: string; value: string }[]>(
-    []
-  );
+  const [options, setOptions] = useState<AutoCompleteOption[]>([]);
   const { flights, fetchFlights, loading } = useFetchFlights();
-  const [formData, setFormData] = useState({
+
+  const [formData, setFormData] = useState<FormData>({
     from: "",
     to: "",
     startDate: "",
@@ -28,9 +37,14 @@ const FlightSearchForm = () => {
   });
 
   const handleSearch = (value: string) => {
-    const filteredOptions = locations.filter((location) =>
-      location.label.toLowerCase().includes(value.toLowerCase())
-    );
+    const filteredOptions = locations
+      .filter((location) =>
+        location.label.toLowerCase().includes(value.toLowerCase())
+      )
+      .map((location) => ({
+        label: location.label,
+        value: location.value,
+      }));
     setOptions(filteredOptions);
   };
 
@@ -51,14 +65,17 @@ const FlightSearchForm = () => {
 
   return (
     <motion.div
-      className="bg-white shadow-lg rounded-xl p-10 max-w-6xl mx-auto mt-10"
+      className="relative bg-white rounded-xl p-10 max-w-6xl mx-auto mt-10"
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
     >
+      {/* Dark Overlay */}
+      <div className="absolute inset-0 bg-white rounded-xl z-0"></div>
+
       {/* Top Navigation */}
       <motion.div
-        className="flex justify-between items-center border-b pb-4"
+        className="relative z-10 flex justify-between items-center border-b pb-4"
         initial={{ opacity: 0, x: -50 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.2, duration: 0.8 }}
@@ -78,7 +95,7 @@ const FlightSearchForm = () => {
 
       {/* Flight Options */}
       <motion.div
-        className="flex justify-between mt-6"
+        className="relative z-10 flex justify-between mt-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 0.8 }}
@@ -87,7 +104,9 @@ const FlightSearchForm = () => {
           <Select
             className="w-72"
             defaultValue="One Way"
-            onChange={(value) => setFormData({ ...formData, tripType: value })}
+            onChange={(value: string) =>
+              setFormData({ ...formData, tripType: value })
+            }
           >
             <Option value="one-way">One Way</Option>
             <Option value="round-trip">Round Trip</Option>
@@ -95,7 +114,7 @@ const FlightSearchForm = () => {
           <Select
             className="w-72"
             defaultValue="1 Passenger"
-            onChange={(value) =>
+            onChange={(value: string) =>
               setFormData({ ...formData, passengers: value })
             }
           >
@@ -106,7 +125,7 @@ const FlightSearchForm = () => {
           <Select
             className="w-72"
             defaultValue="Economy"
-            onChange={(value) =>
+            onChange={(value: string) =>
               setFormData({ ...formData, travelClass: value })
             }
           >
@@ -119,7 +138,7 @@ const FlightSearchForm = () => {
 
       {/* Flight Inputs */}
       <motion.div
-        className="flex items-center space-x-4 mt-6"
+        className="relative z-10 flex items-center space-x-4 mt-6"
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.8 }}
@@ -129,7 +148,7 @@ const FlightSearchForm = () => {
           onSearch={handleSearch}
           placeholder="Please Type Leaving From Location..."
           className="w-full"
-          onSelect={(value) => setFormData({ ...formData, from: value })}
+          onSelect={(value: string) => setFormData({ ...formData, from: value })}
         />
 
         {/* Swap Button */}
@@ -146,16 +165,14 @@ const FlightSearchForm = () => {
           />
         </motion.div>
 
-        {/* Going To */}
         <AutoComplete
           options={options}
           onSearch={handleSearch}
           placeholder="Please Type Going To Location..."
           className="w-full"
-          onSelect={(value) => setFormData({ ...formData, to: value })}
+          onSelect={(value: string) => setFormData({ ...formData, to: value })}
         />
 
-        {/* Departure Date */}
         <DatePicker
           className="w-full"
           placeholder="Departure Date"

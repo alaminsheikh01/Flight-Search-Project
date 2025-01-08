@@ -13,7 +13,7 @@ const ResultPage = () => {
   return (
     <div
       className="h-screen flex flex-col bg-cover bg-center"
-      style={{ backgroundImage: "url('/banner.jpg')" }}
+      style={{ backgroundImage: "url('images/banner.jpg')" }}
     >
       {/* Header Section */}
       <ResultHeader />

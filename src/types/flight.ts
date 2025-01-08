@@ -33,3 +33,9 @@ export type Destination = {
   image: string;
   flag: string;
 };
+
+// Define type for options in AutoComplete
+export type AutoCompleteOption = {
+  label: string;
+  value: string;
+};

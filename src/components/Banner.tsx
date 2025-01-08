@@ -4,12 +4,19 @@ import FlightSearchForm from "./FlightSearchForm";
 
 const Banner = () => {
   return (
-    <section
-      className="relative bg-cover bg-center w-full h-screen flex flex-col justify-center items-center"
-      style={{ backgroundImage: "url('images/banner.jpg')" }}
-    >
-      {/* Dark Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>
+    <section className="relative w-full h-screen flex flex-col justify-center items-center">
+      {/* Video Background */}
+      <video
+        className="absolute inset-0 w-full h-full object-cover"
+        src="/video/video.mp4"
+        autoPlay
+        loop
+        muted
+        playsInline
+      ></video>
+
+      {/* Persistent Dark Overlay */}
+      <div className="absolute inset-0 bg-black bg-opacity-50"></div>
 
       {/* Text Content */}
       <div className="relative z-10 text-center px-4 text-white">
@@ -20,7 +27,7 @@ const Banner = () => {
           Experience the Best in Travel. A Journey Beyond Your Imagination,
         </p>
       </div>
-      
+
       {/* Search Form */}
       <FlightSearchForm />
     </section>

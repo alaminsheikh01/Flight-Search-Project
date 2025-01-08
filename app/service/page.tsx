@@ -1,6 +1,11 @@
-import React from 'react';
+'use client';
+import React, { useEffect } from 'react';
 
 const Services = () => {
+  useEffect(() => {
+    document.title = "Service - Flight Search";
+  }, []);
+
   return (
     <div
       className="min-h-screen bg-cover bg-center flex flex-col items-center justify-center p-6"

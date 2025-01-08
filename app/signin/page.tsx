@@ -1,9 +1,14 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Input, Button } from 'antd';
 import Link from 'next/link';
 
 const SignIn = () => {
+
+    useEffect(() => {
+      document.title = "Sign In - Flight Search";
+    }, []);
+
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"

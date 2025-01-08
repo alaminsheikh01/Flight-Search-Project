@@ -15,7 +15,7 @@ const useFetchFlights = () => {
     try {
       const apiKey = process.env.NEXT_PUBLIC_API_KEY;
       const response = await fetch(
-        `http://api.aviationstack.com/v1/flights?access_key=${apiKey}&dep_iata=${from}&arr_iata=${to}`
+        `https://api.aviationstack.com/v1/flights?access_key=${apiKey}&dep_iata=${from}&arr_iata=${to}`
       );
       const data = await response.json();
 

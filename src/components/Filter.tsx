@@ -1,4 +1,4 @@
-import { Button, Drawer, Radio, Select, Slider } from "antd";
+import { Button, Radio, Select, Slider } from "antd";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { toast } from "react-toastify";
@@ -14,7 +14,6 @@ const Filter = () => {
     airlines: [],
   });
 
-  const [drawerVisible, setDrawerVisible] = useState(false);
 
   const handleFilterChange = (
     key: string,
@@ -25,7 +24,6 @@ const Filter = () => {
 
   return (
     <>
-      {/* Desktop Filter */}
       <motion.div
         className="hidden sm:block w-1/4 bg-white p-6 shadow-lg overflow-y-auto"
         initial={{ opacity: 0, x: -50 }}
@@ -115,70 +113,6 @@ const Filter = () => {
         </motion.div>
       </motion.div>
 
-      {/* Mobile Drawer */}
-      <div className="block sm:hidden">
-        <Button
-          type="primary"
-          className="bg-orange-500 w-full"
-          onClick={() => setDrawerVisible(true)}
-        >
-          Open Filters
-        </Button>
-        <Drawer
-          title="Filters"
-          placement="left"
-          onClose={() => setDrawerVisible(false)}
-          visible={drawerVisible}
-          bodyStyle={{ padding: "16px" }}
-        >
-          <h4 className="font-semibold mb-2">Transit Amount</h4>
-          <Radio.Group
-            onChange={(e) => handleFilterChange("transit", e.target.value)}
-            value={filters.transit}
-            className="flex flex-col mb-6"
-          >
-            <Radio value="all">All</Radio>
-            <Radio value="non-transit">Non-Transit</Radio>
-            <Radio value="1-stop">1 Stop</Radio>
-            <Radio value="2-stop">2 Stops</Radio>
-          </Radio.Group>
-
-          <h4 className="font-semibold mb-2">Price Range</h4>
-          <Slider
-            range
-            defaultValue={[0, 1000]}
-            max={2000}
-            onChange={(value) => handleFilterChange("priceRange", value)}
-          />
-          <div className="flex justify-between text-sm mb-6">
-            <span>USD {filters.priceRange[0]}</span>
-            <span>USD {filters.priceRange[1]}</span>
-          </div>
-
-          <h4 className="font-semibold mb-2">Airlines</h4>
-          <Select
-            mode="multiple"
-            placeholder="Select Airlines"
-            className="w-full mb-6"
-            onChange={(value) => handleFilterChange("airlines", value)}
-          >
-            <Option value="garuda">Garuda Indonesia</Option>
-            <Option value="qatar">Qatar Airways</Option>
-            <Option value="biman">Biman Bangladesh</Option>
-          </Select>
-
-          <Button
-            type="primary"
-            className="w-full bg-orange-500"
-            onClick={() => {
-              setDrawerVisible(false);
-              toast.success("Filter will be applied soon!");
-            }}
-          >
-            Apply Filters
-          </Button>
-        </Drawer>
-      </div>
     </>
   );
 };

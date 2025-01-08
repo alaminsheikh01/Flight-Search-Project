@@ -18,8 +18,8 @@ const FlightCard: React.FC = () => {
       className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-orange-600 scrollbar-track-orange-600"
       style={{
         minHeight: "auto",
-        scrollbarWidth: "thin", // For Firefox
-        scrollbarColor: "#f55c39 #E5E7EB", // Thumb and track color for Firefox
+        scrollbarWidth: "thin",
+        scrollbarColor: "#f55c39 #E5E7EB",
       }}
     >
       {flights?.map((flight, index) => (
@@ -27,7 +27,6 @@ const FlightCard: React.FC = () => {
           key={index}
           className="mb-4 shadow-md rounded-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-1 border border-gray-200 cursor-pointer relative"
         >
-          {/* "Select Flight" Button */}
           <Button
             type="primary"
             className="bg-orange-500 hover:bg-orange-600 text-sm px-4 py-1 absolute top-2 right-2"
@@ -88,7 +87,6 @@ const FlightCard: React.FC = () => {
 
                 {/* Flight Details */}
                 <div className="relative flex justify-between items-center p-3">
-                  {/* Departure Information */}
                   <div className="w-1/3">
                     <p className="text-lg font-semibold text-gray-800">
                       {new Date(flight.departure.scheduled).toLocaleTimeString()}
@@ -103,7 +101,6 @@ const FlightCard: React.FC = () => {
                     </p>
                   </div>
 
-                  {/* Flight Duration and Status */}
                   <div className="flex flex-col items-center w-1/3">
                     <div className="relative w-full h-6 flex items-center justify-center">
                       <div className="w-full border-dashed border-t border-gray-400"></div>

@@ -26,8 +26,7 @@ const ResultHeader = () => {
     tripType: "one-way",
   });
 
-
-// handle search
+  // handle search
   const handleSearch = (value: string) => {
     const filteredOptions = locations.filter((location) =>
       location.label.toLowerCase().includes(value.toLowerCase())
@@ -52,8 +51,9 @@ const ResultHeader = () => {
   };
 
   return (
-    <div className="bg-white p-6 shadow-md z-10 sticky top-0">
-      <div className="flex items-center justify-between md:justify-start md:space-x-4">
+    <div className="bg-white p-6 shadow-md z-10 md:sticky md:top-0">
+      {/* Top Controls */}
+      <div className="flex flex-wrap items-center justify-between gap-4 md:justify-start md:space-x-4">
         <Button
           type="default"
           className="rounded-full px-4 bg-gray-200 hover:bg-gray-300 flex items-center"
@@ -63,16 +63,20 @@ const ResultHeader = () => {
           Back
         </Button>
 
-        <div className="flex space-x-2">
+        <div className="flex flex-wrap gap-2">
           <Button
             type="primary"
-            className="rounded-full px-4 bg-black text-white"
+            className={`rounded-full px-4 ${
+              formData.tripType === "one-way" ? "bg-black text-white" : "bg-gray-200 hover:bg-gray-300"
+            }`}
             onClick={() => setFormData({ ...formData, tripType: "one-way" })}
           >
             One-way
           </Button>
           <Button
-            className="rounded-full px-4 bg-gray-200 hover:bg-gray-300"
+            className={`rounded-full px-4 ${
+              formData.tripType === "round-trip" ? "bg-black text-white" : "bg-gray-200 hover:bg-gray-300"
+            }`}
             onClick={() => setFormData({ ...formData, tripType: "round-trip" })}
           >
             Round-trip
@@ -81,7 +85,7 @@ const ResultHeader = () => {
 
         <Select
           defaultValue="Economy Class"
-          className="w-48"
+          className="w-full md:w-48"
           onChange={(value) => setFormData({ ...formData, travelClass: value })}
         >
           <Option value="economy">Economy Class</Option>
@@ -90,7 +94,7 @@ const ResultHeader = () => {
         </Select>
         <Select
           defaultValue="1 Passenger"
-          className="w-48"
+          className="w-full md:w-48"
           onChange={(value) => setFormData({ ...formData, passengers: value })}
         >
           <Option value="1">1 Passenger</Option>
@@ -100,12 +104,12 @@ const ResultHeader = () => {
       </div>
 
       {/* Search Inputs */}
-      <div className="flex items-center space-x-4 mt-4">
+      <div className="flex flex-wrap gap-4 items-center mt-4">
         <AutoComplete
           options={options}
           onSearch={handleSearch}
           placeholder="Please Type Leaving From Location..."
-          className="w-full"
+          className="flex-1 min-w-[150px]"
           onSelect={(value) => setFormData({ ...formData, from: value })}
         />
 
@@ -119,17 +123,16 @@ const ResultHeader = () => {
           />
         </div>
 
-        {/* Going To */}
         <AutoComplete
           options={options}
           onSearch={handleSearch}
           placeholder="Please Type Going To Location..."
-          className="w-full"
+          className="flex-1 min-w-[150px]"
           onSelect={(value) => setFormData({ ...formData, to: value })}
         />
 
         <DatePicker
-          className="w-full"
+          className="flex-1 min-w-[150px]"
           placeholder="Departure Date"
           onChange={(date, dateString) =>
             setFormData({

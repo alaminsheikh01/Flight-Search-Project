@@ -3,9 +3,11 @@ import React, { useState } from "react";
 import { Select, DatePicker, Button, AutoComplete } from "antd";
 import { SearchOutlined, SwapOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
 import useFetchFlights from "../hooks/useFetch";
 import { useFlightContext } from "../context/FlightContext";
 import { locations } from "../utils/helpers";
+import { toast } from "react-toastify";
 
 const { Option } = Select;
 
@@ -26,52 +28,64 @@ const FlightSearchForm = () => {
   });
 
   const handleSearch = (value: string) => {
-
     const filteredOptions = locations.filter((location) =>
       location.label.toLowerCase().includes(value.toLowerCase())
     );
-
     setOptions(filteredOptions);
   };
 
   const handleFormSubmit = async () => {
     const { from, to, startDate } = formData;
-  
+
     if (!from || !to || !startDate) {
-      alert("Please fill in all required fields");
+      toast.warn("Please fill in all fields");
       return;
     }
-  
+
     const fetchedFlights = await fetchFlights(from, to, startDate);
     if (fetchedFlights) {
       setFlights(fetchedFlights);
       router.push("/result");
     }
   };
-  
 
   return (
-    <div className="bg-white shadow-md rounded-lg p-10 max-w-6xl mx-auto">
+    <motion.div
+      className="bg-white shadow-lg rounded-xl p-10 max-w-6xl mx-auto mt-10"
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8 }}
+    >
       {/* Top Navigation */}
-      <div className="flex justify-between items-center border-b pb-3">
+      <motion.div
+        className="flex justify-between items-center border-b pb-4"
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ delay: 0.2, duration: 0.8 }}
+      >
         <div className="flex space-x-6">
-          <Button className="flex items-center text-red-500 font-medium">
+          <Button className="flex items-center text-red-500 font-medium hover:scale-105 transform transition-all">
             <span className="mr-2">✈️</span> Flight
           </Button>
-          <Button className="flex items-center text-gray-500 hover:text-red-500">
+          <Button className="flex items-center text-gray-500 hover:text-red-500 hover:scale-105 transform transition-all">
             <span className="mr-2">📋</span> Hotel
           </Button>
-          <Button className="flex items-center text-gray-500 hover:text-red-500">
+          <Button className="flex items-center text-gray-500 hover:text-red-500 hover:scale-105 transform transition-all">
             <span className="mr-2">🕋</span> Umrah
           </Button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Flight Options */}
-      <div className="flex justify-between mt-4">
+      <motion.div
+        className="flex justify-between mt-6"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.8 }}
+      >
         <div className="flex space-x-4">
           <Select
-            className="w-80"
+            className="w-72"
             defaultValue="One Way"
             onChange={(value) => setFormData({ ...formData, tripType: value })}
           >
@@ -79,7 +93,7 @@ const FlightSearchForm = () => {
             <Option value="round-trip">Round Trip</Option>
           </Select>
           <Select
-            className="w-80"
+            className="w-72"
             defaultValue="1 Passenger"
             onChange={(value) =>
               setFormData({ ...formData, passengers: value })
@@ -90,7 +104,7 @@ const FlightSearchForm = () => {
             <Option value="3">3 Passengers</Option>
           </Select>
           <Select
-            className="w-80"
+            className="w-72"
             defaultValue="Economy"
             onChange={(value) =>
               setFormData({ ...formData, travelClass: value })
@@ -101,10 +115,15 @@ const FlightSearchForm = () => {
             <Option value="first">First Class</Option>
           </Select>
         </div>
-      </div>
+      </motion.div>
 
       {/* Flight Inputs */}
-      <div className="grid grid-cols-4 gap-4 mt-4 items-center">
+      <motion.div
+        className="flex items-center space-x-4 mt-6"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.6, duration: 0.8 }}
+      >
         <AutoComplete
           options={options}
           onSearch={handleSearch}
@@ -112,16 +131,31 @@ const FlightSearchForm = () => {
           className="w-full"
           onSelect={(value) => setFormData({ ...formData, from: value })}
         />
-        <div className="flex items-center space-x-2">
-          <SwapOutlined className="text-gray-500" />
-          <AutoComplete
-            options={options}
-            onSearch={handleSearch}
-            placeholder="Going To"
-            className="w-full"
-            onSelect={(value) => setFormData({ ...formData, to: value })}
+
+        {/* Swap Button */}
+        <motion.div
+          className="flex items-center justify-center"
+          whileHover={{ scale: 1.2 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <Button
+            type="primary"
+            shape="circle"
+            icon={<SwapOutlined />}
+            className="bg-black text-white border-none"
           />
-        </div>
+        </motion.div>
+
+        {/* Going To */}
+        <AutoComplete
+          options={options}
+          onSearch={handleSearch}
+          placeholder="Going To"
+          className="w-full"
+          onSelect={(value) => setFormData({ ...formData, to: value })}
+        />
+
+        {/* Departure Date */}
         <DatePicker
           className="w-full"
           placeholder="Departure Date"
@@ -132,6 +166,8 @@ const FlightSearchForm = () => {
             })
           }
         />
+
+        {/* Search Button */}
         <Button
           type="primary"
           icon={<SearchOutlined />}
@@ -141,8 +177,8 @@ const FlightSearchForm = () => {
         >
           Search
         </Button>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

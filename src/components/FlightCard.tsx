@@ -11,11 +11,11 @@ const FlightCard = () => {
 
   return (
     <div
-      className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-blue-400 scrollbar-track-gray-100"
+      className="flex-1 overflow-y-auto p-6 scrollbar-thin scrollbar-thumb-orange-600 scrollbar-track-orange-600"
       style={{
         minHeight: "auto",
         scrollbarWidth: "thin", // For Firefox
-        scrollbarColor: "#3B82F6 #E5E7EB", // Thumb and track color for Firefox
+        scrollbarColor: "#f55c39 #E5E7EB", // Thumb and track color for Firefox
       }}
     >
       {flights?.map((flight, index) => (

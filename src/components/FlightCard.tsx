@@ -3,11 +3,14 @@ import React from "react";
 import { toast } from "react-toastify";
 import { useFlightContext } from "../context/FlightContext";
 import { CaretRightOutlined } from "@ant-design/icons";
+import Image from "next/image";
+import { Flight } from "../types/flight";
 
 const { Panel } = Collapse;
 
-const FlightCard = () => {
-  const { flights } = useFlightContext();
+
+const FlightCard: React.FC = () => {
+  const { flights }: { flights: Flight[] } = useFlightContext();
 
   return (
     <div
@@ -29,7 +32,7 @@ const FlightCard = () => {
             className="bg-orange-500 hover:bg-orange-600 text-sm px-4 py-1 absolute top-2 right-2"
             onClick={() =>
               toast.success(`Thanks for booking with ${flight.airline.name}!`, {
-                toastId: "booking-success",
+                toastId: `booking-success-${index}`,
               })
             }
           >
@@ -39,22 +42,20 @@ const FlightCard = () => {
           {/* Card Content */}
           <div className="flex">
             <div className="relative w-1/4 mb-2">
-              <img
-                src="./banner.jpg"
+              <Image
+                src="/banner.jpg"
                 alt="Flight"
+                width={120}
+                height={120}
                 className="w-full h-32 object-cover rounded-tl-md rounded-bl-md"
               />
               <div className="absolute top-1 left-1 bg-orange-600 text-white text-xs font-medium px-2 py-0.5 rounded">
-                {flight.flight_status === "active"
-                  ? "Active Flight"
-                  : "Scheduled"}
+                {flight?.flight_status === "active" ? "Active Flight" : "Scheduled"}
               </div>
             </div>
 
             <div className="w-3/4 p-2">
-              <h3 className="text-md font-semibold text-blue-600">
-                {flight.airline.name}
-              </h3>
+              <h3 className="text-md font-semibold text-blue-600">{flight.airline.name}</h3>
               <p className="text-sm text-gray-600">
                 {flight.departure.iata} ({flight.departure.airport}) →{" "}
                 {flight.arrival.iata} ({flight.arrival.airport})
@@ -69,10 +70,7 @@ const FlightCard = () => {
           <Collapse
             bordered={false}
             expandIcon={({ isActive }) => (
-              <CaretRightOutlined
-                rotate={isActive ? 90 : 0}
-                className="text-blue-500"
-              />
+              <CaretRightOutlined rotate={isActive ? 90 : 0} className="text-blue-500" />
             )}
             className="border-t border-gray-200"
           >
@@ -92,21 +90,15 @@ const FlightCard = () => {
                   {/* Departure Information */}
                   <div className="w-1/3">
                     <p className="text-lg font-semibold text-gray-800">
-                      {new Date(
-                        flight.departure.scheduled
-                      ).toLocaleTimeString()}
+                      {new Date(flight.departure.scheduled).toLocaleTimeString()}
                     </p>
                     <p className="text-sm text-gray-500">
-                      {new Date(
-                        flight.departure.scheduled
-                      ).toLocaleDateString()}
+                      {new Date(flight.departure.scheduled).toLocaleDateString()}
                     </p>
-                    <p className="mt-1 text-gray-800 font-medium">
-                      {flight.departure.airport}
-                    </p>
+                    <p className="mt-1 text-gray-800 font-medium">{flight.departure.airport}</p>
                     <p className="text-sm text-gray-500">
-                      Terminal {flight.departure.terminal}, Gate{" "}
-                      {flight.departure.gate}
+                      Terminal {flight?.departure?.terminal || "N/A"}, Gate{" "}
+                      {flight?.departure?.gate || "N/A"}
                     </p>
                   </div>
 
@@ -119,13 +111,11 @@ const FlightCard = () => {
                       </div>
                     </div>
                     <p className="text-sm text-red-500 font-medium mt-2">
-                      {flight.flight_status === "active"
-                        ? "On Time"
-                        : "Delayed"}
+                      {flight?.flight_status === "active" ? "On Time" : "Delayed"}
                     </p>
                     <p className="text-xs text-gray-600 mt-1">
-                      {flight.departure.delay
-                        ? `Delay: ${flight.departure.delay} mins`
+                      {flight?.departure?.delay
+                        ? `Delay: ${flight?.departure?.delay} mins`
                         : "No Delay"}
                     </p>
                   </div>
@@ -138,12 +128,10 @@ const FlightCard = () => {
                     <p className="text-sm text-gray-500">
                       {new Date(flight.arrival.scheduled).toLocaleDateString()}
                     </p>
-                    <p className="mt-1 text-gray-800 font-medium">
-                      {flight.arrival.airport}
-                    </p>
+                    <p className="mt-1 text-gray-800 font-medium">{flight.arrival.airport}</p>
                     <p className="text-sm text-gray-500">
-                      Terminal {flight.arrival.terminal}, Gate{" "}
-                      {flight.arrival.gate}
+                      Terminal {flight?.arrival?.terminal || "N/A"}, Gate{" "}
+                      {flight?.arrival?.gate || "N/A"}
                     </p>
                   </div>
                 </div>

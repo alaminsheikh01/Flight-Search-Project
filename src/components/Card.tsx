@@ -1,9 +1,12 @@
 "use client";
 import React from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import { destinations } from "../utils/helpers";
+import { Destination } from "../types/flight";
 
-const TrendingDestinations = () => {
+
+const TrendingDestinations: React.FC = () => {
   return (
     <motion.div
       className="p-12"
@@ -40,7 +43,7 @@ const TrendingDestinations = () => {
           },
         }}
       >
-        {destinations?.map((destination, index) => (
+        {destinations?.map((destination: Destination, index: number) => (
           <motion.div
             key={index}
             className="relative rounded-lg overflow-hidden shadow-lg group"
@@ -52,9 +55,12 @@ const TrendingDestinations = () => {
             }}
             transition={{ duration: 0.6 }}
           >
-            <img
-              src={destination.image}
+            {/* Next.js Image Component */}
+            <Image
+              src={destination?.image}
               alt={destination.name}
+              width={400}
+              height={300}
               className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
             />
             <div className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-lg font-bold px-3 py-1 rounded">

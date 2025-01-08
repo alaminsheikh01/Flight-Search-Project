@@ -81,34 +81,35 @@ export const demoFlights = [
     {
       name: "Kuala Lumpur",
       flag: "🇺🇸",
-      image:"./banner.jpg"
+      image: "/images/banner.jpg",
     },
     {
       name: "Dhaka",
       flag: "🇧🇩",
-      image: "./banner1.jpg",
+      image: "/images/banner1.jpg",
     },
     {
       name: "Bangkok",
       flag: "🇹🇭",
-      image: "./banner2.jpg",
+      image: "/images/banner2.jpg",
     },
     {
       name: "Singapore",
       flag: "🇸🇬",
-      image: "./banner3.jpg",
+      image: "/images/banner3.jpg",
     },
     {
       name: "Cox's Bazar",
       flag: "🇧🇩",
-      image: "./banner1.jpg",
+      image: "/images/banner1.jpg",
     },
     {
       name: "Faridpur",
       flag: "🇧🇩",
-      image: "./banner.jpg",
+      image: "/images/banner.jpg",
     },
   ];
+  
 
   export const locations = [
     { label: "New York, USA (JFK)", value: "JFK" },

@@ -6,7 +6,7 @@ const Banner = () => {
   return (
     <section
       className="relative bg-cover bg-center w-full h-screen flex flex-col justify-center items-center"
-      style={{ backgroundImage: "url('/banner.jpg')" }}
+      style={{ backgroundImage: "url('images/banner.jpg')" }}
     >
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black/80"></div>

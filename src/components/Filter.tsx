@@ -1,6 +1,7 @@
 import { Button, Radio, Select, Slider } from "antd";
 import React, { useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "react-toastify";
 
 const { Option } = Select;
 
@@ -98,7 +99,11 @@ const Filter = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 0.6, duration: 0.8 }}
       >
-        <Button type="primary" className="mt-6 w-full hover:scale-105 transition-transform bg-orange-500">
+        <Button
+          type="primary"
+          className="mt-6 w-full hover:scale-105 transition-transform bg-orange-500"
+          onClick={() => toast.success("Filter will be applied soon!")}
+        >
           Apply Filters
         </Button>
       </motion.div>

@@ -100,7 +100,7 @@ const ResultHeader = () => {
         <AutoComplete
           options={options}
           onSearch={handleSearch}
-          placeholder="Leaving From"
+          placeholder="Please Type Leaving From Location..."
           className="w-full"
           onSelect={(value) => setFormData({ ...formData, from: value })}
         />
@@ -119,7 +119,7 @@ const ResultHeader = () => {
         <AutoComplete
           options={options}
           onSearch={handleSearch}
-          placeholder="Going To"
+          placeholder="Please Type Going To Location..."
           className="w-full"
           onSelect={(value) => setFormData({ ...formData, to: value })}
         />

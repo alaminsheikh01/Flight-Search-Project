@@ -24,7 +24,7 @@ const useFetchFlights = () => {
         toast.success("Flights loaded successfully");
         return data?.data;
       } else {
-        toast.warn("No flights found");
+        toast.warn("No flights found, please try different locations");
         setFlights(null);
         return null; 
       }

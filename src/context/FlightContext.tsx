@@ -1,23 +1,17 @@
 import { useState, createContext, useContext } from "react";
+import { Flight, FlightContextType, FlightProviderProps } from "../types/flight";
 
-interface FlightProviderProps {
-  children: React.ReactNode;
-}
 
-interface FlightContextType {
-  flights: any;
-  setFlights: React.Dispatch<React.SetStateAction<any>>;
-}
 
 const defaultContextValue: FlightContextType = {
-  flights: null,
+  flights: [],
   setFlights: () => {},
 };
 
 export const FlightContext = createContext<FlightContextType>(defaultContextValue);
 
 export const FlightProvider = ({ children }: FlightProviderProps) => {
-  const [flights, setFlights] = useState(null);
+  const [flights, setFlights] = useState<Flight[]>([]);
 
   return (
     <FlightContext.Provider value={{ flights, setFlights }}>

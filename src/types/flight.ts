@@ -15,3 +15,12 @@ export interface Flight {
   price?: number;
   duration?: string;
 }
+
+export interface FlightProviderProps {
+  children: React.ReactNode;
+}
+
+export interface FlightContextType {
+  flights: Flight[];
+  setFlights: React.Dispatch<React.SetStateAction<Flight[]>>;
+}

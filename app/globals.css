@@ -3,7 +3,6 @@
 @tailwind utilities;
 
 
-/* Add this to your CSS file */
 @keyframes bounce {
     0%, 100% {
       transform: translateY(0);

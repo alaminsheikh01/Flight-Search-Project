@@ -7,7 +7,7 @@ const SignIn = () => {
   return (
     <div
       className="min-h-screen flex items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/banner.jpg')" }} // Ensure 'signin-bg.jpg' exists in the public folder
+      style={{ backgroundImage: "url('/banner.jpg')" }}
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg w-full max-w-md">
         <h1 className="text-3xl font-bold text-center text-orange-500 mb-6">Sign In</h1>

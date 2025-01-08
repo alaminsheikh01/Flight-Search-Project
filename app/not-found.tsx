@@ -6,7 +6,7 @@ const NotFound = () => {
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center bg-cover bg-center"
-      style={{ backgroundImage: "url('/banner.jpg')" }} // Ensure 'not-found-bg.jpg' exists in the public folder
+      style={{ backgroundImage: "url('/banner.jpg')" }}
     >
       <div className="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg text-center">
         <h1 className="text-5xl font-bold text-orange-500 mb-4">404</h1>

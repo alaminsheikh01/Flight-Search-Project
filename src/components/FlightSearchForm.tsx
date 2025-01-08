@@ -5,7 +5,7 @@ import { SearchOutlined, SwapOutlined } from "@ant-design/icons";
 import { useRouter } from "next/navigation";
 import useFetchFlights from "../hooks/useFetch";
 import { useFlightContext } from "../context/FlightContext";
-import { locations } from "./helper";
+import { locations } from "../utils/helpers";
 
 const { Option } = Select;
 

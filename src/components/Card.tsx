@@ -23,7 +23,6 @@ const TrendingDestinations = () => {
             <div className="absolute top-2 left-2 bg-black bg-opacity-50 text-white text-lg font-bold px-3 py-1 rounded">
               {destination.name} {destination.flag}
             </div>
-            {/* Add a dark overlay with fade-in effect */}
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-40 transition-all duration-500"></div>
           </div>
         ))}

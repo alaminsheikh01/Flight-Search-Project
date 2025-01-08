@@ -2,7 +2,6 @@ import { useState, createContext, useContext } from "react";
 import { Flight, FlightContextType, FlightProviderProps } from "../types/flight";
 
 
-
 const defaultContextValue: FlightContextType = {
   flights: [],
   setFlights: () => {},
